@@ -3,31 +3,71 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
-/// Implementation of the `stringify` macro, which takes an expression
-/// of any type and produces a tuple containing the value of that expression
-/// and the source code that produced the value. For example
-///
-///     #stringify(x + y)
-///
-///  will expand to
-///
-///     (x + y, "x + y")
-public struct StringifyMacro: ExpressionMacro {
+import SwiftCompilerPlugin
+import SwiftSyntax
+import SwiftSyntaxBuilder
+import SwiftSyntaxMacros
+
+public struct LoggeraiMacro: MemberMacro {
     public static func expansion(
-        of node: some FreestandingMacroExpansionSyntax,
+        of node: AttributeSyntax,
+        providingMembersOf declaration: some DeclGroupSyntax,
         in context: some MacroExpansionContext
-    ) -> ExprSyntax {
-        guard let argument = node.arguments.first?.expression else {
-            fatalError("compiler bug: the macro does not have any arguments")
+    ) throws -> [DeclSyntax] {
+        // Extract type name
+        guard let typeName = declaration.as(ClassDeclSyntax.self)?.name ??
+                declaration.as(StructDeclSyntax.self)?.name ??
+                declaration.as(ActorDeclSyntax.self)?.name ??
+                declaration.as(EnumDeclSyntax.self)?.name else {
+            throw LoggerError.onlyApplicableToNamedTypes
         }
 
-        return "(\(argument), \(literal: argument.description))"
+        // Extract category or use type name
+        let category = node.arguments?.as(LabeledExprListSyntax.self)?
+            .first(where: { $0.label?.text == "category" })?
+            .expression.as(StringLiteralExprSyntax.self)?
+            .segments.first?.as(StringSegmentSyntax.self)?.content.text
+        ?? typeName.text
+
+        // Generate logger property
+        return [
+            """
+            static let logger: os.Logger = {
+                let subsystem: String
+                if let bundleID = Bundle.main.bundleIdentifier {
+                    subsystem = bundleID
+                } else {
+                    subsystem = "com.unknown.app"
+                }
+                return os.Logger(
+                    subsystem: subsystem,
+                    category: "\(raw: category)"
+                )
+            }()
+            
+            var logger: os.Logger { Self.logger }
+            """
+        ]
+    }
+}
+
+enum LoggerError: Error, CustomStringConvertible {
+    case onlyApplicableToNamedTypes
+    case missingSubsystemArgument
+
+    var description: String {
+        switch self {
+        case .onlyApplicableToNamedTypes:
+            return "This macro can only be applied to classes, structs, enums, or actors"
+        case .missingSubsystemArgument:
+            return "Subsystem argument is required"
+        }
     }
 }
 
 @main
-struct LoggeraiPlugin: CompilerPlugin {
+struct LoggeraiMacros: CompilerPlugin {
     let providingMacros: [Macro.Type] = [
-        StringifyMacro.self,
+        LoggeraiMacro.self
     ]
 }

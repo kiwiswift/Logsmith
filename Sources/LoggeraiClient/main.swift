@@ -1,8 +1,10 @@
 import Loggerai
+import Foundation
+import os
 
-let a = 17
-let b = 25
-
-let (result, code) = #stringify(a + b)
-
-print("The value \(result) was produced by the code \"\(code)\"")
+@Loggerai
+class Example {
+    func greet(name: String) {
+        logger.info("Hello, \(name)! This is a greeting from the Loggerai macro.")
+    }
+}
