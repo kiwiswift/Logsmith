@@ -144,6 +144,54 @@ worker.doWork()
 Worker.logger.warning("Static warning message")
 ```
 
+### Shorthand Logging Functions
+
+Logsmith provides concise, emoji-prefixed shorthand functions for each log level, available on types annotated with `@Loggable`. These help visually scan logs and reduce boilerplate.
+
+| Function    | Emoji | Log Level   |
+|-------------|:-----:|:-----------|
+| `💬()`      | 💬    | General    |
+| `📝()`      | 📝    | Verbose    |
+| `ℹ️()`      | ℹ️    | Info       |
+| `⚠️()`      | ⚠️    | Warning    |
+| `❌()`      | ❌    | Error      |
+| `💣()`      | 💣    | Critical   |
+| `📜()`      | 📜    | Debug      |
+
+Each function takes the same parameters as their verbose counterparts (e.g., `info()`, `error()`, etc.).
+
+#### Example usage
+```swift
+import Logsmith
+
+@Loggable
+struct Demo {
+    func run() {
+        💬("General log message")
+        📝("Extra verbose trace")
+        ℹ️("Some info")
+        ⚠️("Something looks suspicious")
+        ❌("A recoverable error")
+        💣("Critical failure!")
+        📜("Debug details")
+    }
+}
+
+let demo = Demo()
+demo.run()
+```
+
+#### Example console output
+```
+💬 [Demo] General log message
+📝 [Demo] Extra verbose trace
+ℹ️ [Demo] Some info
+⚠️ [Demo] Something looks suspicious
+❌ [Demo] A recoverable error
+💣 [Demo] Critical failure!
+📜 [Demo] Debug details
+```
+
 ## Example executable
 
 A sample executable demonstrating Logsmith usage is included in the repository under the `Example` target. It showcases:
