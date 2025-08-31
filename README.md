@@ -28,11 +28,9 @@ Logsmith provides a type-attached macro, `@Loggable`, that injects a preconfigur
   - Building
   - Running tests
 - Contributing
+- Getting started
 - Code of Conduct
-- Security
 - License
-- Roadmap
-- FAQ
 
 ## Features
 
@@ -86,6 +84,98 @@ targets: [
 ]
 ```
 
+## Usage
+
+### What gets generated
+
+When you annotate a type with `@Loggable`, Logsmith generates a preconfigured `Logger` instance and a set of convenient logging methods attached to that type. By default, it injects:
+
+- An instance property `logger` of type `Logger`.
+- A static property `logger` of type `Logger`.
+- Convenience methods for logging at various levels: `debug()`, `info()`, `error()`, `warning()`, `verbose()`, `critical()`, and a general `log()` method.
+
+The logger is configured with a category matching the type name and a subsystem derived from your app’s bundle identifier.
+
+### Customization
+
+You can customize the generated logger by specifying parameters in the `@Loggable` macro:
+
+```swift
+@Loggable(category: "MyCategory", subsystem: "com.example.myapp", propertyName: "myLogger", staticOnly: true)
+struct Example {
+    // Your code here
+}
+```
+
+- `category`: Sets the category for the logger (defaults to the type name).
+- `subsystem`: Sets the subsystem string (defaults to `Bundle.main.bundleIdentifier` or `com.unknown.app`).
+- `propertyName`: Changes the name of the injected logger property (defaults to `logger`).
+- `staticOnly`: If true, only a static logger is generated; no instance property or methods are injected.
+
+### Supported declarations
+
+Logsmith supports the following Swift declarations:
+
+- Classes
+- Structs
+- Enums
+- Actors
+
+Protocols and unnamed extensions are not supported.
+
+### Example
+
+```swift
+import Logsmith
+
+@Loggable
+struct Worker {
+    func doWork() {
+        info("Starting work...") // Logs with info level and emoji prefix
+        debug("Detailed debug info")
+        error("An error occurred!")
+    }
+}
+
+let worker = Worker()
+worker.doWork()
+
+// Static logging
+Worker.logger.warning("Static warning message")
+```
+
+## Example executable
+
+A sample executable demonstrating Logsmith usage is included in the repository under the `Example` target. It showcases:
+
+- Applying `@Loggable` to various types.
+- Using the generated logging methods.
+- Customizing logger properties.
+
+To run the example:
+
+```bash
+swift run Example
+```
+
+## Development
+
+### Building
+
+To build the Logsmith package:
+
+```bash
+swift build
+```
+
+### Running tests
+
+Run the full test suite, including macro snapshot tests, with:
+
+```bash
+swift test
+```
+
 # Contributing to Logsmith
 
 Thanks for your interest in contributing!
@@ -103,7 +193,7 @@ Thanks for your interest in contributing!
    ```bash
    swift build
    swift test
-
+    ```
 #License
 
 ## MIT License
