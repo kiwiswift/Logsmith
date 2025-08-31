@@ -47,6 +47,41 @@ final class LogsmithTests: XCTestCase {
                 var logger: Logger {
                     Self.logger
                 }
+
+                func logDebug(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.debug("📝 \(text)")
+                }
+
+                func logInfo(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.info("ℹ️ \(text)")
+                }
+
+                func logError(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.error("❌ \(text)")
+                }
+
+                func log(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.log("📜 \(text)")
+                }
+
+                func logVerbose(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.debug("💬 \(text)")
+                }
+
+                func logWarning(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.error("⚠️ \(text)")
+                }
+
+                func logCritical(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.fault("💣 \(text)")
+                }
             }
             """#
         }
@@ -59,7 +94,7 @@ final class LogsmithTests: XCTestCase {
             struct Widget {}
             """
         } expansion: {
-            """
+            #"""
             struct Widget {
 
                 static let logger: Logger = {
@@ -72,8 +107,43 @@ final class LogsmithTests: XCTestCase {
                 var logger: Logger {
                     Self.logger
                 }
+
+                func logDebug(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.debug("📝 \(text)")
+                }
+
+                func logInfo(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.info("ℹ️ \(text)")
+                }
+
+                func logError(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.error("❌ \(text)")
+                }
+
+                func log(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.log("📜 \(text)")
+                }
+
+                func logVerbose(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.debug("💬 \(text)")
+                }
+
+                func logWarning(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.error("⚠️ \(text)")
+                }
+
+                func logCritical(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.fault("💣 \(text)")
+                }
             }
-            """
+            """#
         }
     }
 
@@ -84,7 +154,7 @@ final class LogsmithTests: XCTestCase {
             actor Worker {}
             """
         } expansion: {
-            """
+            #"""
             actor Worker {
 
                 static let logger: Logger = {
@@ -97,8 +167,43 @@ final class LogsmithTests: XCTestCase {
                 var logger: Logger {
                     Self.logger
                 }
+
+                func logDebug(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.debug("📝 \(text)")
+                }
+
+                func logInfo(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.info("ℹ️ \(text)")
+                }
+
+                func logError(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.error("❌ \(text)")
+                }
+
+                func log(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.log("📜 \(text)")
+                }
+
+                func logVerbose(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.debug("💬 \(text)")
+                }
+
+                func logWarning(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.error("⚠️ \(text)")
+                }
+
+                func logCritical(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.fault("💣 \(text)")
+                }
             }
-            """
+            """#
         }
     }
 
@@ -109,7 +214,7 @@ final class LogsmithTests: XCTestCase {
             enum Mode { case a, b }
             """
         } expansion: {
-            """
+            #"""
             enum Mode { case a, b 
 
                 static let logger: Logger = {
@@ -122,8 +227,43 @@ final class LogsmithTests: XCTestCase {
                 var logger: Logger {
                     Self.logger
                 }
+
+                func logDebug(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.debug("📝 \(text)")
+                }
+
+                func logInfo(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.info("ℹ️ \(text)")
+                }
+
+                func logError(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.error("❌ \(text)")
+                }
+
+                func log(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.log("📜 \(text)")
+                }
+
+                func logVerbose(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.debug("💬 \(text)")
+                }
+
+                func logWarning(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.error("⚠️ \(text)")
+                }
+
+                func logCritical(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.fault("💣 \(text)")
+                }
             }
-            """
+            """#
         }
     }
 
@@ -134,7 +274,7 @@ final class LogsmithTests: XCTestCase {
             final class APIClient {}
             """
         } expansion: {
-            """
+            #"""
             final class APIClient {
 
                 static let logger: Logger = {
@@ -147,8 +287,43 @@ final class LogsmithTests: XCTestCase {
                 var logger: Logger {
                     Self.logger
                 }
+
+                func logDebug(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.debug("📝 \(text)")
+                }
+
+                func logInfo(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.info("ℹ️ \(text)")
+                }
+
+                func logError(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.error("❌ \(text)")
+                }
+
+                func log(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.log("📜 \(text)")
+                }
+
+                func logVerbose(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.debug("💬 \(text)")
+                }
+
+                func logWarning(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.error("⚠️ \(text)")
+                }
+
+                func logCritical(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.fault("💣 \(text)")
+                }
             }
-            """
+            """#
         }
     }
 
@@ -164,7 +339,7 @@ final class LogsmithTests: XCTestCase {
             class DynamicLoggerOwner {}
             """
         } expansion: {
-            """
+            #"""
             enum IDs {
                 static let bundle = "com.example.dynamic"
                 static let cat = "DynamicCategory"
@@ -181,8 +356,43 @@ final class LogsmithTests: XCTestCase {
                 var logger: Logger {
                     Self.logger
                 }
+
+                func logDebug(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.debug("📝 \(text)")
+                }
+
+                func logInfo(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.info("ℹ️ \(text)")
+                }
+
+                func logError(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.error("❌ \(text)")
+                }
+
+                func log(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.log("📜 \(text)")
+                }
+
+                func logVerbose(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.debug("💬 \(text)")
+                }
+
+                func logWarning(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.error("⚠️ \(text)")
+                }
+
+                func logCritical(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.fault("💣 \(text)")
+                }
             }
-            """
+            """#
         }
     }
 
@@ -193,7 +403,7 @@ final class LogsmithTests: XCTestCase {
             struct CustomName {}
             """
         } expansion: {
-            """
+            #"""
             struct CustomName {
 
                 static let log: Logger = {
@@ -206,8 +416,43 @@ final class LogsmithTests: XCTestCase {
                 var log: Logger {
                     Self.log
                 }
+
+                func logDebug(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    log.debug("📝 \(text)")
+                }
+
+                func logInfo(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    log.info("ℹ️ \(text)")
+                }
+
+                func logError(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    log.error("❌ \(text)")
+                }
+
+                func log(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    log.log("📜 \(text)")
+                }
+
+                func logVerbose(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    log.debug("💬 \(text)")
+                }
+
+                func logWarning(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    log.error("⚠️ \(text)")
+                }
+
+                func logCritical(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    log.fault("💣 \(text)")
+                }
             }
-            """
+            """#
         }
     }
 
@@ -239,7 +484,7 @@ final class LogsmithTests: XCTestCase {
             class ViewController {}
             """
         } expansion: {
-            """
+            #"""
             class ViewController {
 
                 static let uiLogger: Logger = {
@@ -252,8 +497,43 @@ final class LogsmithTests: XCTestCase {
                 var uiLogger: Logger {
                     Self.uiLogger
                 }
+
+                func logDebug(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    uiLogger.debug("📝 \(text)")
+                }
+
+                func logInfo(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    uiLogger.info("ℹ️ \(text)")
+                }
+
+                func logError(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    uiLogger.error("❌ \(text)")
+                }
+
+                func log(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    uiLogger.log("📜 \(text)")
+                }
+
+                func logVerbose(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    uiLogger.debug("💬 \(text)")
+                }
+
+                func logWarning(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    uiLogger.error("⚠️ \(text)")
+                }
+
+                func logCritical(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    uiLogger.fault("💣 \(text)")
+                }
             }
-            """
+            """#
         }
     }
 
@@ -264,7 +544,7 @@ final class LogsmithTests: XCTestCase {
             struct Box<T> { let value: T }
             """
         } expansion: {
-            """
+            #"""
             struct Box<T> { let value: T 
 
                 static let logger: Logger = {
@@ -277,8 +557,43 @@ final class LogsmithTests: XCTestCase {
                 var logger: Logger {
                     Self.logger
                 }
+
+                func logDebug(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.debug("📝 \(text)")
+                }
+
+                func logInfo(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.info("ℹ️ \(text)")
+                }
+
+                func logError(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.error("❌ \(text)")
+                }
+
+                func log(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.log("📜 \(text)")
+                }
+
+                func logVerbose(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.debug("💬 \(text)")
+                }
+
+                func logWarning(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.error("⚠️ \(text)")
+                }
+
+                func logCritical(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    logger.fault("💣 \(text)")
+                }
             }
-            """
+            """#
         }
     }
 
@@ -291,7 +606,7 @@ final class LogsmithTests: XCTestCase {
             }
             """
         } expansion: {
-            """
+            #"""
             struct Outer {
                 struct Inner {
 
@@ -305,9 +620,44 @@ final class LogsmithTests: XCTestCase {
                     var logger: Logger {
                         Self.logger
                     }
+
+                    func logDebug(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                        let text = message()
+                        logger.debug("📝 \(text)")
+                    }
+
+                    func logInfo(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                        let text = message()
+                        logger.info("ℹ️ \(text)")
+                    }
+
+                    func logError(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                        let text = message()
+                        logger.error("❌ \(text)")
+                    }
+
+                    func log(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                        let text = message()
+                        logger.log("📜 \(text)")
+                    }
+
+                    func logVerbose(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                        let text = message()
+                        logger.debug("💬 \(text)")
+                    }
+
+                    func logWarning(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                        let text = message()
+                        logger.error("⚠️ \(text)")
+                    }
+
+                    func logCritical(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                        let text = message()
+                        logger.fault("💣 \(text)")
+                    }
             }
             }
-            """
+            """#
         }
     }
 

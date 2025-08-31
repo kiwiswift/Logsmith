@@ -21,14 +21,14 @@ public struct LoggableMacro: MemberMacro {
                 declaration.as(EnumDeclSyntax.self)?.name else {
             throw LoggerError.onlyApplicableToNamedTypes
         }
-
+        
         // Helper to read labeled arguments
         let args = node.arguments?.as(LabeledExprListSyntax.self)
-
+        
         func findArgument(_ label: String) -> ExprSyntax? {
             args?.first(where: { $0.label?.text == label })?.expression
         }
-
+        
         func stringLiteralValue(from expr: ExprSyntax?) -> String? {
             guard let lit = expr?.as(StringLiteralExprSyntax.self) else { return nil }
             // Join all string segments (handles multi-part literals)
@@ -36,7 +36,7 @@ public struct LoggableMacro: MemberMacro {
                 segment.as(StringSegmentSyntax.self)?.content.text
             }.joined()
         }
-
+        
         // Category: either a string literal, any other expression (inserted raw), or the type name
         let categoryExprSource: String
         if let provided = findArgument("category") {
@@ -50,7 +50,7 @@ public struct LoggableMacro: MemberMacro {
         } else {
             categoryExprSource = "\"\(typeNameToken.text)\""
         }
-
+        
         // Subsystem: either a literal/expression provided, or default to Bundle.main.bundleIdentifier ?? "com.unknown.app"
         let subsystemExprSource: String
         if let provided = findArgument("subsystem") {
@@ -62,7 +62,7 @@ public struct LoggableMacro: MemberMacro {
         } else {
             subsystemExprSource = "Bundle.main.bundleIdentifier ?? \"com.unknown.app\""
         }
-
+        
         // Name: property identifier - must be a simple string literal in the attribute (defaults to "logger")
         let nameIdentifier: String
         if let provided = findArgument("name"), let str = stringLiteralValue(from: provided), !str.isEmpty {
@@ -70,16 +70,16 @@ public struct LoggableMacro: MemberMacro {
         } else {
             nameIdentifier = "logger"
         }
-
+        
         // staticOnly: boolean literal (defaults to false)
         var staticOnly = false
         if let provided = findArgument("staticOnly"), let boolLit = provided.as(BooleanLiteralExprSyntax.self) {
             staticOnly = boolLit.literal.text == "true"
         }
-
-        // Build generated members. Always generate a static logger; optionally generate an instance computed var.
+        
+        // Build generated members. Always generate a static logger; optionally generate an instance computed var and helpers.
         var members: [DeclSyntax] = []
-
+        
         let staticLoggerDecl: DeclSyntax = """
         static let \(raw: nameIdentifier): Logger = {
             return Logger(
@@ -88,16 +88,69 @@ public struct LoggableMacro: MemberMacro {
             )
         }()
         """
-
         members.append(staticLoggerDecl)
-
+        
         if !staticOnly {
             let instanceDecl: DeclSyntax = """
             var \(raw: nameIdentifier): Logger { Self.\(raw: nameIdentifier) }
             """
             members.append(instanceDecl)
+            
+            // Helper methods (do not pass file/function/line to OSLog.Logger APIs)
+            let helpers: [DeclSyntax] = [
+                // logDebug
+                """
+                func logDebug(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    \(raw: nameIdentifier).debug("📝 \\(text)")
+                }
+                """,
+                // logInfo
+                """
+                func logInfo(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    \(raw: nameIdentifier).info("ℹ️ \\(text)")
+                }
+                """,
+                // logError
+                """
+                func logError(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    \(raw: nameIdentifier).error("❌ \\(text)")
+                }
+                """,
+                // log (default)
+                """
+                func log(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    \(raw: nameIdentifier).log("📜 \\(text)")
+                }
+                """,
+                // logVerbose
+                """
+                func logVerbose(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    \(raw: nameIdentifier).debug("💬 \\(text)")
+                }
+                """,
+                // logWarning
+                """
+                func logWarning(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    \(raw: nameIdentifier).error("⚠️ \\(text)")
+                }
+                """,
+                // logCritical
+                """
+                func logCritical(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+                    let text = message()
+                    \(raw: nameIdentifier).fault("💣 \\(text)")
+                }
+                """
+            ]
+            members.append(contentsOf: helpers)
         }
-
+        
         return members
     }
 }
@@ -105,7 +158,7 @@ public struct LoggableMacro: MemberMacro {
 enum LoggerError: Error, CustomStringConvertible {
     case onlyApplicableToNamedTypes
     case missingSubsystemArgument
-
+    
     var description: String {
         switch self {
         case .onlyApplicableToNamedTypes:
