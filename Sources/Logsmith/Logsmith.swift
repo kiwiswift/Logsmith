@@ -3,4 +3,4 @@
 
 @_exported import OSLog
 @attached(member, names: named(logger))
-public macro Loggerai(category: String? = nil) = #externalMacro(module: "LoggeraiMacros", type: "LoggeraiMacro")
+public macro Loggable(category: String? = nil) = #externalMacro(module: "LogsmithMacros", type: "LoggableMacro")

@@ -5,7 +5,7 @@ import PackageDescription
 import CompilerPluginSupport
 
 let package = Package(
-    name: "Loggerai",
+    name: "Logsmith",
     platforms: [
         // Macro plugins are built on macOS; use a recent version to match plugin requirements.
         .macOS(.v13),
@@ -16,12 +16,12 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "Loggerai",
-            targets: ["Loggerai"]
+            name: "Logsmith",
+            targets: ["Logsmith"]
         ),
         .executable(
-            name: "LoggeraiClient",
-            targets: ["LoggeraiClient"]
+            name: "LogsmithClient",
+            targets: ["LogsmithClient"]
         ),
     ],
     dependencies: [
@@ -30,24 +30,24 @@ let package = Package(
     ],
     targets: [
         .macro(
-            name: "LoggeraiMacros",
+            name: "LogsmithMacros",
             dependencies: [
                 .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
                 .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
             ]
         ),
         .target(
-            name: "Loggerai",
-            dependencies: ["LoggeraiMacros"]
+            name: "Logsmith",
+            dependencies: ["LogsmithMacros"]
         ),
         .executableTarget(
-            name: "LoggeraiClient",
-            dependencies: ["Loggerai"]
+            name: "LogsmithClient",
+            dependencies: ["Logsmith"]
         ),
         .testTarget(
-            name: "LoggeraiTests",
+            name: "LogsmithTests",
             dependencies: [
-                "LoggeraiMacros",
+                "LogsmithMacros",
                 .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
                 .product(name: "MacroTesting", package: "swift-macro-testing"),
             ]

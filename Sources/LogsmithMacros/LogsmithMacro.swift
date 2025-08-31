@@ -3,7 +3,7 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
-public struct LoggeraiMacro: MemberMacro {
+public struct LoggableMacro: MemberMacro {
     public static func expansion(
         of node: AttributeSyntax,
         providingMembersOf declaration: some DeclGroupSyntax,
@@ -61,8 +61,8 @@ enum LoggerError: Error, CustomStringConvertible {
 }
 
 @main
-struct LoggeraiMacros: CompilerPlugin {
+struct LogsmithMacros: CompilerPlugin {
     let providingMacros: [Macro.Type] = [
-        LoggeraiMacro.self
+        LoggableMacro.self
     ]
 }

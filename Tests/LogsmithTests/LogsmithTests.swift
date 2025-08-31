@@ -6,15 +6,15 @@ import XCTest
 import MacroTesting
 
 // Macro implementations build for the host, so the corresponding module is not available when cross-compiling. Cross-compiled tests may still make use of the macro itself in end-to-end tests.
-#if canImport(LoggeraiMacros)
-import LoggeraiMacros
+#if canImport(LogsmithMacros)
+import LogsmithMacros
 #endif
 
-final class LoggeraiTests: XCTestCase {
+final class LogsmithTests: XCTestCase {
 
     override func invokeTest() {
         withMacroTesting(record: false,
-                         macros: [LoggeraiMacro.self]) {
+                         macros: [LoggableMacro.self]) {
             super.invokeTest()
         }
     }
@@ -22,10 +22,10 @@ final class LoggeraiTests: XCTestCase {
     func testMacro() throws {
         assertMacro {
         """
-        @Loggerai
+        @Loggable
         class Example {
             func greet(name: String) {
-                logger.info("Hello, \(name)! This is a greeting from the Loggerai macro.")
+                logger.info("Hello, \(name)! This is a greeting from the Logsmith macro.")
             }
         }
 
@@ -34,7 +34,7 @@ final class LoggeraiTests: XCTestCase {
             """
             class Example {
                 func greet(name: String) {
-                    logger.info("Hello, -[LoggeraiTests testMacro]! This is a greeting from the Loggerai macro.")
+                    logger.info("Hello, -[LogsmithTests testMacro]! This is a greeting from the Logsmith macro.")
                 }
 
                 static let logger: Logger = {
