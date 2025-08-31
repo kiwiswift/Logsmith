@@ -3,11 +3,6 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
-import SwiftCompilerPlugin
-import SwiftSyntax
-import SwiftSyntaxBuilder
-import SwiftSyntaxMacros
-
 public struct LoggeraiMacro: MemberMacro {
     public static func expansion(
         of node: AttributeSyntax,
@@ -32,7 +27,7 @@ public struct LoggeraiMacro: MemberMacro {
         // Generate logger property
         return [
             """
-            static let logger: os.Logger = {
+            static let logger: Logger = {
                 let subsystem: String
                 if let bundleID = Bundle.main.bundleIdentifier {
                     subsystem = bundleID

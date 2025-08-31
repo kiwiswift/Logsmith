@@ -1,6 +1,5 @@
 import Loggerai
 import Foundation
-import os
 
 @Loggerai
 class Example {

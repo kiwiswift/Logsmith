@@ -37,7 +37,7 @@ final class LoggeraiTests: XCTestCase {
                     logger.info("Hello, -[LoggeraiTests testMacro]! This is a greeting from the Loggerai macro.")
                 }
 
-                static let logger: os.Logger = {
+                static let logger: Logger = {
                     let subsystem: String
                     if let bundleID = Bundle.main.bundleIdentifier {
                         subsystem = bundleID
