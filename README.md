@@ -148,15 +148,15 @@ Worker.logger.warning("Static warning message")
 
 Logsmith provides concise, emoji-prefixed shorthand functions for each log level, available on types annotated with `@Loggable`. These help visually scan logs and reduce boilerplate.
 
-| Function    | Emoji | Log Level   |
-|-------------|:-----:|:-----------|
-| `💬()`      | 💬    | General    |
-| `📝()`      | 📝    | Verbose    |
-| `ℹ️()`      | ℹ️    | Info       |
-| `⚠️()`      | ⚠️    | Warning    |
-| `❌()`      | ❌    | Error      |
-| `💣()`      | 💣    | Critical   |
-| `📜()`      | 📜    | Debug      |
+| Function       | Emoji | Log Level   |
+|----------------|:-----:|:-----------|
+| `logVerbose()` | 💬 | Verbose |
+| `logDebug()` | 📝 | Debug |
+| `logInfo()` | ℹ️ | Info |
+| `logWarning()` | ⚠️ | Warning |
+| `logError()` | ❌ | Error |
+| `logCritical()` | 💣 | Critical |
+| `log()` | 📜 | Default |
 
 Each function takes the same parameters as their verbose counterparts (e.g., `info()`, `error()`, etc.).
 
@@ -167,13 +167,13 @@ import Logsmith
 @Loggable
 struct Demo {
     func run() {
-        💬("General log message")
-        📝("Extra verbose trace")
-        ℹ️("Some info")
-        ⚠️("Something looks suspicious")
-        ❌("A recoverable error")
-        💣("Critical failure!")
-        📜("Debug details")
+        logVerbose("Extra verbose trace")
+        logDebug("Debug details")
+        logInfo("Some info")
+        logWarning("Something looks suspicious")
+        logError("A recoverable error")
+        logCritical("Critical failure!")
+        log("General log message")
     }
 }
 
@@ -183,13 +183,13 @@ demo.run()
 
 #### Example console output
 ```
-💬 [Demo] General log message
-📝 [Demo] Extra verbose trace
+💬 [Demo] Extra verbose trace
+📝 [Demo] Debug details
 ℹ️ [Demo] Some info
 ⚠️ [Demo] Something looks suspicious
 ❌ [Demo] A recoverable error
 💣 [Demo] Critical failure!
-📜 [Demo] Debug details
+📜 [Demo] General log message
 ```
 
 ## Example executable
